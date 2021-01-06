@@ -1,0 +1,25 @@
+
+{% extends 'basic_app/base.html' %}
+{% block body_block %}
+<div class="container">
+  <nav class="navbar navbar-inverse">
+<h1> היעוץ הוא בעלות של 50 שקלים עם פסיכולוג </h1>
+<h3>לפני כניסה ליעוץ אנא מלאו את השאלון !</h3>
+  <a href="{% url 'chat:Expert_questions'%}" class="btn btn-primary">שאלון פסיכולוגי</a>
+  <a href="{% url 'chat:Payment_all'%}" class="btn btn-primary">ביצוע תשלום</a>
+      <a href="{% url 'chat:Inbox_cost'%}" class="btn btn-primary">צט</a>
+      <a href="{% url 'chat:usersearch_cost' %}" class="button is-success">New message</a>
+
+    </nav>
+</div>
+
+{% for user in story %}
+    {% if user.aproved  %}
+
+      <h3>{{ user.user.username }}</h3>
+      {{  user.aproved }}
+        {{user.date}}
+        {%endif%}
+{%endfor%}
+
+{% endblock %}

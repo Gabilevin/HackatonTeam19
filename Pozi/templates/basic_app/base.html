@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<link>
+    <meta charset="utf-8" style="background-color:#6b5b95">
+    <title>Base</title>
+    <!-- Latest compiled and minified CSS -->
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    {% load static %}
+        <link rel="stylesheet" href="{% static 'css\master.css' %}">
+<head>
+</head>
+  <body style="background-color:#feb236;,margin=50px;">
+   <nav class="navbar navbar-expand-md navbar-dark bg-dark static-top">
+      <div class="container">
+        <ul class="nav navbar-nav">
+
+          <li><a class="navbar-brand" href="{% url 'index' %}">Pozi</a></li>
+
+          {% if user.is_authenticated %}
+            <li><a class='navbar-link' href="{% url 'accounts:logout' %}">Logout</a></li>
+             {% if request.user.is_authenticated %}
+                        {% if request.user.is_superuser %}
+                            <li><a class="navbar-link" href="{% url 'admin:index' %}">Admin</a></li>
+
+                        {% endif %}
+             {% endif %}
+
+             <a class=dropdown-menu" ></a></ul>
+
+<ul class="nav navbar-nav">
+  <li role="presentation" class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+      תפריט <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+        <li><a class="button" href="{% url 'basic_app:consultation' %}"> יעוץ</a></li>
+        <li><a  class="nav-link" href="{% url 'basic_app:stories' %}"> סיפורים אישיים</a></li>
+        <li><a  class="nav-link" href="{% url 'basic_app:Videos' %}">סרטונים</a></li>
+    </ul>
+  </li>
+</ul>
+<ul class="nav navbar-nav">
+  <li role="presentation" class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+      הגדרות <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <li><a  class="nav-link" href="{% url 'basic_app:profile' user.pk %}">פרופיל אישי</a></li>
+        <li><a  class="nav-link" href="{% url 'basic_app:font_changing' %}">שינוי גופן</a></li>
+        <li><a  class="nav-link" href="{% url 'basic_app:Review' %}">השאר ביקורת</a></li>
+        <li><a  class="nav-link" href="{% url 'basic_app:about' %}">אודות </a></li>
+    </ul>
+  </li>
+       {% if request.user.is_staff %}
+    <ul class="nav navbar-nav">
+  <li role="presentation" class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+      מנהלים <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+        <li><a  class="nav-link" href="{% url 'basic_app:login_report' %}">דוח זמני כניסה</a></li>
+        <li><a  class="nav-link" href="{% url 'basic_app:Consumption_report' %}">דוח צריכת תכנים</a></li>
+        <li><a  class="nav-link" href="{% url 'basic_app:Recent_changes' %}">דוח שינוים אחרונים</a></li>
+    </ul>
+  </li>
+
+        {% endif %}
+
+          <form class="navbar-form navbar-left" method="GET" action="{% url 'basic_app:index' %}">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name ="title">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+
+          {% else %}
+            <li><a class="navbar-link" href="{% url 'accounts:login' %}">Login</a></li>
+            <li><a class="navbar-link" href="{% url 'accounts:register' %}">Register</a></li>
+            {% endif %}
+
+
+
+
+      </div>
+
+
+    </nav>
+    <div class="container">
+    {% block body_block %}
+    {% endblock %}
+    </div>
+
+
+
+
+  </body>
+<!--<script type="text/javascript" src ="{% static 'web/js/master.js' %}">-->
+
+</html>
