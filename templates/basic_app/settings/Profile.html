@@ -1,0 +1,12 @@
+
+{% extends 'basic_app/base.html' %}
+{% block body_block %}
+
+<h1> פרופיל אישי</h1>
+    <li><a  class="nav-link" href="{% url 'basic_app:Video_repository' %}">מאגר סרטונים</a></li>
+    <li><a class="nav-link" href="{% url 'basic_app:change_password' %}">שינוי סיסמה</a></li>
+    <li><a  class="nav-link" href="{% url 'basic_app:change_email' %}">שינוי מייל</a></li>
+
+
+
+{% endblock %}

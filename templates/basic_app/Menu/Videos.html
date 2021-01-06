@@ -1,0 +1,10 @@
+
+{% extends 'basic_app/base.html' %}
+{% block body_block %}
+
+<h1> סרטונים</h1>
+  <li><a class='navbar-link' href="{% url 'basic_app:Sport' %}"> ספורט</a></li>
+  <li><a class="navbar-link" href="{% url 'basic_app:stand_up_comedy' %}">סטנדאפ</a></li>
+  <li><a class="navbar-link" href="{% url 'basic_app:motivation' %}">מוטיבציה</a></li>
+
+{% endblock %}

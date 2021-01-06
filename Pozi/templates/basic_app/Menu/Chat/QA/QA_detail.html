@@ -1,0 +1,30 @@
+
+{% extends 'basic_app/base.html' %}
+{% block body_block %}
+<div class ="container">
+    <br>
+    <div class ="card">
+        <div class ="card-body">
+            <div class ="row">
+                <div class="col-md-4">
+                    <h1>{{ QA.subject }}</h1>
+                    <p> {{ QA.text}}</p>
+                    <h3>{{ QA.release_date }}</h3>
+                    {% if request.user.is_authenticated %}
+                        {% if request.user.is_superuser %}
+                            <a href="{% url 'basic_app:edit_QA' QA.id %}" class="btn btn-warning">Edit QA</a>
+                            <a href="{% url 'basic_app:delete_QA' QA.id %}" class="btn btn-danger">Delete QA</a>
+                        {% endif %}
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+{% endblock %}
