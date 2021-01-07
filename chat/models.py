@@ -16,6 +16,8 @@ class chat_first_question_model(models.Model):
     if_psychologist = models.CharField(max_length=5000)
     about_yourself = models.CharField(max_length=5000)
     feel = models.CharField(max_length=9, choices=feel_today, null=True)
+    published_date = models.DateTimeField(auto_now_add=True,null=True)
+
 
     def __str__(self):
         return str(self.user)
@@ -29,7 +31,6 @@ class payment(models.Model):
     card_number = models.CharField(max_length=16)
     validity = models.CharField(max_length=9)
     back_dig = models.CharField(max_length=3)
-    aproved=models.BooleanField(null=True ,default=False)
     payment_date = models.DateTimeField(auto_now_add=True,null=True)
     #gil_take1 = payment_date + timedelta(days=7)
 

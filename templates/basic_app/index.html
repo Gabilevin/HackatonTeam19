@@ -1,7 +1,10 @@
 
 {% extends "basic_app/base.html" %}
 {% block body_block %}
+<section class="notice" data-container="body" data-toggle="tooltip" data-placement="bottom" data-original-title="test"><marquee><span class="notice"> {{ popup }} </span></marquee></div></section>
+
 {% for message in messages %}
+
                 <h3><i id="message" style="background-color:red">{{message}}</i></h3>
                 {% endfor %}
 <div class="container">
@@ -22,13 +25,10 @@
   </div>
     </div>
 
-<!--        <li>date :{{ storie.release_date }} </li>-->
 
       {% endfor %}
-<script>
 
-    alert('{{  "תן חיוך הכל לטובה"  }}');
-</script>
+
 
     {% else %}
         <h2>Register or Login if you'd like to</h2>

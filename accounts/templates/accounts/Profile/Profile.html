@@ -10,17 +10,28 @@
 <h3>Email Address: {{ user1.email }}</h3>
 <h3>First Name: {{ user1.first_name }}</h3>
 <h3>Last Name: {{ user1.last_name }}</h3>
+<h3>Birthday Date: {{ user1.regiter_extra_model.date }}</h3>
+<h3>Gender: {{ user1.regiter_extra_model.Gender }}</h3>
 
 
 
 <form method="POST" action="" enctype="multipart/form-data">
 {% csrf_token %}
+    <style>
+        .test{
+            visibility: hidden;
+        }
+    </style>
+
+    <div class="test" >
     {{ form.date.label }}:
       {{ form.date}}
     {{ form.Gender.label }}:
-      {{ form.Gender}}
+      {{ form.Gender}}</div>
+    {%if user.username == user1.username %}
     {{ form.image.label }}:
       {{ form.image}}
+
 
 <input class="btn btn-primary" type="submit" name="Update Information">
     </form>
@@ -31,11 +42,22 @@
     <li><a class="nav-link" href="{% url 'accounts:change_password' %}">שינוי סיסמה</a></li>
     <li><a class="nav-link" href="{% url 'accounts:change_email' %}">שינוי מייל</a></li>
 
+   {%endif%}
 
+              {% if not user.groups.all.0.name == "customer" %}
+{%for i in aa%}
+<h3>זמן ביצוע השאלון : {{i.published_date}}</h3>
+<h4>האם לוקח תרופות: {{i.taking_medication}}</h4>
+<h4> מהו מצבו הרפואי :{{i.Medication_sensitivity}}</h4>
+<h4>איך הוא מרגיש עם הקורונה :{{i.Corona_feeling}}</h4>
+<h4> האם הוא טופל כבר בעבר :{{i.if_psychologist}}</h4>
+<h4> רקע על עצמו:{{i.about_yourself}}</h4>
+<h4>איך הוא מרגיש:{{i.feel}}</h4>
+<br>
 
+{%endfor%}
 
-
-
+   {%endif%}
 
 
 {% endblock %}

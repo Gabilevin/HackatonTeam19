@@ -21,10 +21,9 @@
   </div>
     </div>
         {% endfor %}
- {% if request.user.is_authenticated %}
-    {% if request.user.is_superuser %}
+              {% if not user.groups.all.0.name == "customer" %}
+
         <a href="{% url 'chat:Daliy_Tip_add'%}" class="btn btn-primary">add Tip</a>
-{% endif %}
     {% endif %}
 
 

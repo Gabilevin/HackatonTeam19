@@ -21,6 +21,7 @@ from .utils import token_generator
 from django.contrib.auth import login as auth_login
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+from chat.models import chat_first_question_model
 from basic_app.models import itemReviewToAdmin
 from django.template.loader import get_template
 from xhtml2pdf import pisa
@@ -28,7 +29,6 @@ from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404
 from datetime import datetime
 from django.shortcuts import render
-
 
 
 class UserListView(ListView):
@@ -192,6 +192,7 @@ def activate(request, uidb64, token):
     else:
         return HttpResponse('Activation link is invalid!')
 
+
 @unatenticated_user
 def login_user(request):
     if request.user.is_authenticated:
@@ -203,7 +204,6 @@ def login_user(request):
 
             user = authenticate(username=username, password=password)
 
-
             if user is not None:
                 if user.is_active:
                     login(request, user)
@@ -213,7 +213,6 @@ def login_user(request):
             else:
                 return render(request, 'accounts/login.html', {"error": "invalid Username or Password.try again."})
         return render(request, 'accounts/login.html')
-
 
 
 def logout_user(request):
@@ -234,10 +233,7 @@ def change_email(request):
             user.save()
         return redirect("basic_app:index")
 
-    return render(request, 'accounts/change_email.html', {'form': form})
-
-
-
+    return render(request, 'accounts/Profile/change_email.html', {'form': form})
 
 
 def change_password(request):
@@ -255,24 +251,30 @@ def change_password(request):
     return render(request, 'accounts/Profile/change_password.html', {
         'form': form
     })
+
+
 def Video_repository(request):
     return render(request, 'accounts/Profile/Video_repository.html', {})
 
 
-
-
 def profile(request, id):
     user1 = User.objects.get(id=id)
-
     regiter_extra_model = request.user.regiter_extra_model
     form = register_extra(instance=regiter_extra_model)
 
+    chat = chat_first_question_model.objects.all()
     if request.method == 'POST':
         form = register_extra(request.POST, request.FILES, instance=regiter_extra_model)
         if form.is_valid():
             form.save()
-
+    print(chat)
+    if (chat):
+        aa = chat_first_question_model.objects.filter(user=user1)
+        print(aa)
+    else:
+        return render(request, 'accounts/Profile/Profile.html', {'form': form, 'user1': user1})
     context = {
+        'aa': aa,
         'form': form,
         'user1': user1,
 

@@ -10,12 +10,11 @@
                     <h1>{{ QA.subject }}</h1>
                     <p> {{ QA.text}}</p>
                     <h3>{{ QA.release_date }}</h3>
-                    {% if request.user.is_authenticated %}
-                        {% if request.user.is_superuser %}
+                                  {% if not user.groups.all.0.name == "customer" %}
+
                             <a href="{% url 'chat:edit_QA' QA.id %}" class="btn btn-warning">Edit QA</a>
                             <a href="{% url 'chat:delete_QA' QA.id %}" class="btn btn-danger">Delete QA</a>
                         {% endif %}
-                    {% endif %}
 
                 </div>
             </div>

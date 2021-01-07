@@ -14,7 +14,6 @@ urlpatterns = [
     url(r'^Videos/$', views.Videos, name='Videos'),
     url(r'^settings/Review/$', views.Review, name='Review'),
     url(r'^about/$', views.about, name='about'),
-    url(r'^settings/Review/success/$', views.successView, name='successView'),
     path('stories/detail/<int:id>/', views.detail, name='detail'),
     path('stories/edit_story/<int:id>/', views.edit_story, name='edit_story'),
     path('delete_story/<int:id>/', views.delete_story, name='delete_story'),

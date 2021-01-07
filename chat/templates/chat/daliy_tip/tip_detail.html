@@ -10,12 +10,11 @@
                     <h1>{{ Daliy_Tips.subject }}</h1>
                     <p> {{ Daliy_Tips.text}}</p>
                     <h3>{{ Daliy_Tips.release_date }}</h3>
-                    {% if request.user.is_authenticated %}
-                        {% if request.user.is_superuser %}
+                                                   {% if not user.groups.all.0.name == "customer" %}
+
                             <a href="{% url 'chat:edit_tip' Daliy_Tips.id %}" class="btn btn-warning">Edit Tip</a>
                             <a href="{% url 'chat:delete_tip' Daliy_Tips.id %}" class="btn btn-danger">Delete Tip</a>
                         {% endif %}
-                    {% endif %}
 
                 </div>
             </div>

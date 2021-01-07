@@ -5,40 +5,40 @@ from django import template
 
 from django.contrib.auth.models import User, Group
 from django.core.mail import EmailMessage
-
+from chat.models import tip_model
 from . import forms
 from .models import stories_model
 from .forms import ContactForm, stories_form
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.urls import reverse
 from django.contrib import messages
-
+import random
 from django.shortcuts import render, redirect
-from accounts.decorators import allowed_users
+from accounts.decorators import allowed_users,unatenticated_user
 from django.template import RequestContext, loader
 
 
 def index(request):
     query = request.GET.get("title")
+    items = tip_model.objects.all()
 
+    # if you want only a single random item
+    random_item = random.choice(items)
     all_stories = None
     if query:
         all_stories = stories_model.objects.filter(subject__icontains=query)
     else:
         all_stories = stories_model.objects.all()
     context = {
-        "stories": all_stories
+        "stories": all_stories,
+        "popup": random_item.text
     }
     return render(request, 'basic_app/index.html', context)
 
 
 def consultation(request):
-    user = User.objects.all()
 
-    context = {
-        "user": user
-    }
-    return render(request, 'basic_app/Menu/consultation.html', context)
+    return render(request, 'basic_app/Menu/consultation.html')
 
 
 def stories(request):
@@ -64,7 +64,7 @@ def font_changing(request):
 def Videos(request):
     return render(request, 'basic_app/Menu/Videos.html', {})
 
-
+@unatenticated_user
 def about(request):
     return render(request, 'basic_app/settings/about.html', {})
 
@@ -91,8 +91,7 @@ def Review(request):
     return render(request, "basic_app/settings/Review.html", {'form': form})
 
 
-def successView(request):
-    return HttpResponse('Success! Thank you for your message.')
+
 
 
 def detail(request, id):
@@ -103,7 +102,7 @@ def detail(request, id):
     }
     return render(request, 'basic_app/Menu/stories/detail.html', context)
 
-
+@allowed_users(allowed_roles=['Admin', 'Doc','student_Doc'])
 def edit_story(request, id):
     if request.user.is_authenticated:
         if request.user.is_superuser:
@@ -124,14 +123,14 @@ def edit_story(request, id):
 
     return redirect("accounts:login")
 
-
+@allowed_users(allowed_roles=['Admin', 'Doc','student_Doc'])
 def delete_story(request, id):
     if request.user.is_authenticated:
         if request.user.is_superuser:
             story = stories_model.objects.get(id=id)
 
             story.delete()
-            return redirect("basic_app:stories")
+            return redirect("index")
         else:
             return redirect("basic_app:index")
 

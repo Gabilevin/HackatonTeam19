@@ -12,14 +12,13 @@ from .forms import chat_first_question_form, payment_form, tip_form, QA_form
 from accounts.decorators import allowed_users, unatenticated_user
 from datetime import datetime
 
-
 from datetime import date, timedelta
 
 
 def cost_chat(request):
     payments = payment.objects.all()
-    payment3 = list(filter(lambda x: x.user == request.user,payments))
-    if(payment3):
+    payment3 = list(filter(lambda x: x.user == request.user, payments))
+    if (payment3):
         aa = payment.objects.filter(user=request.user).last()
         some_day_last_week = aa.payment_date + timedelta(days=7)
 
@@ -124,16 +123,21 @@ def NewConversation(request, username):
 
 
 def SendDirect(request):
-    from_user = request.user
-    to_user_username = request.POST.get('to_user')
-    body = request.POST.get('body')
+    Messages = Message.objects.all()
+    Message3 = list(filter(lambda x: x.user == request.user, Messages))
+    if (Message3):
+        from_user = request.user
+        to_user_username = request.POST.get('to_user')
+        body = request.POST.get('body')
 
-    if request.method == 'POST':
-        to_user = User.objects.get(username=to_user_username)
-        Message.send_message(from_user, to_user, body)
-        return redirect('chat:Inbox')
+        if request.method == 'POST':
+            to_user = User.objects.get(username=to_user_username)
+            Message.send_message(from_user, to_user, body)
+            return redirect('chat:Inbox')
+        else:
+            HttpResponseBadRequest()
     else:
-        HttpResponseBadRequest()
+        return redirect('chat:Inbox')
 
 
 def checkDirects(request):
@@ -191,16 +195,22 @@ def Directs_cost(request, username):
 
 
 def SendDirect_cost(request):
-    from_user_cost = request.user
-    to_user_cost_username = request.POST.get('to_user_cost')
-    body = request.POST.get('body_cost')
+    Messages = Message_cost.objects.all()
+    Message3 = list(filter(lambda x: x.user == request.user, Messages))
+    if (Message3):
+        from_user_cost = request.user
+        to_user_cost_username = request.POST.get('to_user_cost')
+        body = request.POST.get('body_cost')
 
-    if request.method == 'POST':
-        to_user_cost = User.objects.get(username=to_user_cost_username)
-        Message_cost.send_message(from_user_cost, to_user_cost, body)
-        return redirect('chat:Inbox_cost')
+        if request.method == 'POST':
+            to_user_cost = User.objects.get(username=to_user_cost_username)
+            Message_cost.send_message(from_user_cost, to_user_cost, body)
+            return redirect('chat:Inbox_cost')
+        else:
+            HttpResponseBadRequest()
     else:
-        HttpResponseBadRequest()
+        # messages.error(request, 'you dont have any chat open yet ,please open a new one')
+        return redirect('chat:Inbox_cost')
 
 
 def NewConversation_cost(request, username):
@@ -285,8 +295,6 @@ def Payment_all(request):
                 'rafulhelp@gmail.com',
                 [user.email],
             )
-            form.aproved = "Yes"
-            print(form.aproved)
             user.save()
 
             email.send(fail_silently=False)
@@ -316,7 +324,7 @@ def tip_detail(request, id):
     return render(request, 'chat/daliy_tip/tip_detail.html', context)
 
 
-@allowed_users(allowed_roles=['Admin', 'Doc'])
+@allowed_users(allowed_roles=['Admin', 'Doc', 'student_Doc'])
 def Daliy_Tip_add(request):
     form = tip_form()
     if request.method == 'POST':
@@ -334,40 +342,28 @@ def Daliy_Tip_add(request):
     return render(request, 'chat/Daliy_Tip/add_Tip.html', {'form': form})
 
 
-@allowed_users(allowed_roles=['Admin', 'Doc'])
+@allowed_users(allowed_roles=['Admin', 'Doc', 'student_Doc'])
 def edit_tip(request, id):
-    if request.user.is_authenticated:
-        if request.user.is_superuser:
-            tip = tip_model.objects.get(id=id)
+    tip = tip_model.objects.get(id=id)
 
-            if request.method == "POST":
-                form = tip_form(request.POST, instance=tip)
+    if request.method == "POST":
+        form = tip_form(request.POST, instance=tip)
 
-                if form.is_valid():
-                    data = form.save(commit=False)
-                    data.save()
-                    return redirect("chat:tip_detail", id)
-            else:
-                form = tip_form(instance=tip)
-            return render(request, 'chat/Daliy_Tip/add_Tip.html', {"form": form}, )
-        else:
-            return redirect("basic_app:index")
-
-    return redirect("accounts:login")
+        if form.is_valid():
+            data = form.save(commit=False)
+            data.save()
+            return redirect("chat:tip_detail", id)
+    else:
+        form = tip_form(instance=tip)
+    return render(request, 'chat/Daliy_Tip/add_Tip.html', {"form": form}, )
 
 
-@allowed_users(allowed_roles=['Admin', 'Doc'])
+@allowed_users(allowed_roles=['Admin', 'Doc', 'student_Doc'])
 def delete_tip(request, id):
-    if request.user.is_authenticated:
-        if request.user.is_superuser:
-            daliy_tip = tip_model.objects.get(id=id)
+    daliy_tip = tip_model.objects.get(id=id)
 
-            daliy_tip.delete()
-            return redirect("chat:Daliy_Tip")
-        else:
-            return redirect("basic_app:index")
-
-    return redirect("accounts:login")
+    daliy_tip.delete()
+    return redirect("chat:Daliy_Tip")
 
 
 def QA(request):
@@ -387,7 +383,7 @@ def QA_detail(request, id):
     return render(request, 'chat/QA/QA_detail.html', context)
 
 
-@allowed_users(allowed_roles=['Admin', 'Doc'])
+@allowed_users(allowed_roles=['Admin', 'Doc', 'student_Doc'])
 def QA_add(request):
     form = QA_form()
     if request.method == 'POST':
@@ -406,40 +402,28 @@ def QA_add(request):
     return render(request, 'chat/QA/add_QA.html', {'form': form}, )
 
 
-@allowed_users(allowed_roles=['Admin', 'Doc'])
+@allowed_users(allowed_roles=['Admin', 'Doc', 'student_Doc'])
 def edit_QA(request, id):
-    if request.user.is_authenticated:
-        if request.user.is_superuser:
-            QA = QA_model.objects.get(id=id)
+    QA = QA_model.objects.get(id=id)
 
-            if request.method == "POST":
-                form = QA_form(request.POST, instance=QA)
+    if request.method == "POST":
+        form = QA_form(request.POST, instance=QA)
 
-                if form.is_valid():
-                    data = form.save(commit=False)
-                    data.save()
-                    return redirect("chat:QA_detail", id)
-            else:
-                form = QA_form(instance=QA)
-            return render(request, 'chat/QA/add_QA.html', {"form": form}, )
-        else:
-            return redirect("basic_app:index")
-
-    return redirect("accounts:login")
+        if form.is_valid():
+            data = form.save(commit=False)
+            data.save()
+            return redirect("chat:QA_detail", id)
+    else:
+        form = QA_form(instance=QA)
+    return render(request, 'chat/QA/add_QA.html', {"form": form}, )
 
 
-@allowed_users(allowed_roles=['Admin', 'Doc'])
+@allowed_users(allowed_roles=['Admin', 'Doc', 'student_Doc'])
 def delete_QA(request, id):
-    if request.user.is_authenticated:
-        if request.user.is_superuser:
-            QA = QA_model.objects.get(id=id)
+    QA = QA_model.objects.get(id=id)
 
-            QA.delete()
-            return redirect("chat:QA")
-        else:
-            return redirect("basic_app:index")
-
-    return redirect("accounts:login")
+    QA.delete()
+    return redirect("chat:QA")
 
 
 def profile_search(request):
