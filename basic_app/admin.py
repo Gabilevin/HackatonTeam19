@@ -1,5 +1,15 @@
 from django.contrib import admin
-from basic_app.models import UserProfileInfo
 # Register your models here.
 
-admin.site.register(UserProfileInfo)
+from django.contrib import admin
+from basic_app.models import itemReviewToAdmin, stories_model
+
+
+
+
+admin.site.register(itemReviewToAdmin)
+admin.site.register(stories_model)
+
+
+
+
