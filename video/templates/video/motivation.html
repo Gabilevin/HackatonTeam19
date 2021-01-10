@@ -25,7 +25,7 @@
                       <p class="card-text">
 
                              {% if not user.groups.all.0.name == "customer" %}
-      <a href = '/video/motivation/motivation_detail/{{ i.id }}'><div class="caption">
+      <a href = '/video/motivation/motivation_detail/{{ i.id }}'>
                       <h3>Edit </h3>
                       {% endif %}
                       {% video i.video 'tiny' %}
