@@ -137,7 +137,8 @@ def SendDirect(request):
         else:
             HttpResponseBadRequest()
     else:
-        return redirect('chat:Inbox')
+        messages.warning( request,'you dont have any chat open yet ,please open a new one')
+        return redirect('index')
 
 
 def checkDirects(request):
@@ -209,8 +210,8 @@ def SendDirect_cost(request):
         else:
             HttpResponseBadRequest()
     else:
-        # messages.error(request, 'you dont have any chat open yet ,please open a new one')
-        return redirect('chat:Inbox_cost')
+        messages.warning( request,'you dont have any chat open yet ,please open a new one')
+        return redirect('index')
 
 
 def NewConversation_cost(request, username):

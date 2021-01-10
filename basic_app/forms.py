@@ -22,15 +22,6 @@ class stories_form(forms.ModelForm):
         exclude = 'release_date',
 
 
-class FormName(forms.Form):
-    name = forms.CharField()
-    email = forms.EmailField()
-    text = forms.CharField(widget=forms.Textarea)
 
-
-class storieform(forms.ModelForm):
-    class Meta:
-        model = stories_model
-        fields = ('subject', 'text')
 
 

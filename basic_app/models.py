@@ -5,9 +5,9 @@ from django.urls import reverse
 from django.utils import timezone
 from django.conf import settings
 
+
 # Create your models here.
 # from .forms import UserForm
-
 
 
 class itemReviewToAdmin(models.Model):
@@ -17,7 +17,7 @@ class itemReviewToAdmin(models.Model):
     release_date = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-        return self.text
+        return self.subject
 
 
 class stories_model(models.Model):
@@ -26,9 +26,6 @@ class stories_model(models.Model):
     text = models.TextField(max_length=5000, null=True)
 
     def __str__(self):
-        return self.subject
-
-    def __unicode__(self):
         return self.subject
 
 

@@ -2,32 +2,35 @@
 
 {% load crispy_forms_tags %}
 {% block body_block %}
+<style>
+    #hit
+    {
+         font-size: 20px;
+    }
+</style>
 
 <div class ="container">
     <div class="card">
         <div class =card-body>
-          <h3 class =text-center>Register an Account</h3>
-            <form action="" method ="POST" enctype="multipart/form-data">
+          <h1 class =text-center>Register an Account</h1>
+            <form id="hit" action="" method ="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form | crispy }}
                 {{ form1 | crispy }}
 
                  <div class="jumbotron" >
         <p >
-                    האתר פוזי המופעל ע"י חברת פוזי  ומשמש גם בתור אתר מכירות לרכישת טיפולים עם פסיכולוגים.
-         האמור בתקנון זה בלשון זכר הוא לשם הנוחות בלבד והתקנון מתייחס לבני שני המינים באופן שווה.
-         הרכישה באמצעות האתר כפופה לתנאים המפורטים בתקנון זה.
-        עצם רכישת המוצר באתר תהווה הצהרה מצד הלקוח כי קרא את הוראות תקנון זה, הבין אותן והסכים להן. התקנון מהווה חוזה מחייב בינך לבין החברה.
-        </p>
+                    Welcome to the POZI website The use of the website is subject to the conditions listed below.
+Privacy Policy: Your private information will be used to maximize personal care and use of the Site. Your details will not be passed to a third party.</p>
         <h3>
-            נא לאשר את המסמך     <input type="checkbox" name=""  value="" required>
+             Confirm <input type="checkbox" name=""  value="" required>
 
         </h3>
 
     </div>
 <ul class="nav navbar-nav">
 </ul>
-                <input type="submit" value="Register" class="btn btn-danger">
+                <input id="hit" type="submit" value="Register" class="btn btn-success btn-primary">
 
             </form>
 

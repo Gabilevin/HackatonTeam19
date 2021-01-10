@@ -21,7 +21,7 @@ from .utils import token_generator
 from django.contrib.auth import login as auth_login
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-from chat.models import chat_first_question_model
+from chat.models import chat_first_question_model,payment
 from basic_app.models import itemReviewToAdmin
 from django.template.loader import get_template
 from xhtml2pdf import pisa
@@ -37,6 +37,34 @@ class UserListView(ListView):
 
 def user_render_pdf_view(request, *args, **kwargs):
     pass
+
+
+def render_pdf_payments(request):
+    template_path = 'accounts/Managers/Recent_paymnets.html'
+    user_list = User.objects.order_by('first_name')
+    payments_count = payment.objects.all().count() * 50
+    payments_users = payment.objects.all()
+    print(payments_count)
+
+    user_dict = {'user': user_list,'payments_count':payments_count,'payments_users':payments_users}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    # Download
+    # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    # Dispaly
+    response['Content-Disposition'] = 'filename="report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(user_dict)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
 
 
 def render_pdf_view(request):
@@ -64,28 +92,30 @@ def render_pdf_view(request):
     return response
 
 
+
 def render_pdf_login(request):
     day = datetime.now().day
     template_path = 'accounts/Managers/Content_Consumption_Report.html'
     reviews_list = itemReviewToAdmin.objects.order_by('id')
-    reviews_dict = {'review': reviews_list, 'day': day}
-    # Create a Django response object, and specify content_type as pdf
+    reviews_dict = {'review': reviews_list,'day' : day}
+        # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
-    # Download
-    # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
-    # Dispaly
+            #Download
+    #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+            #Dispaly
     response['Content-Disposition'] = 'filename="report.pdf"'
-    # find the template and render it.
+        # find the template and render it.
     template = get_template(template_path)
     html = template.render(reviews_dict)
 
-    # create a pdf
+        # create a pdf
     pisa_status = pisa.CreatePDF(
-        html, dest=response)
-    # if error then show some funy view
+       html, dest=response)
+        # if error then show some funy view
     if pisa_status.err:
-        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
 
 
 @allowed_users(allowed_roles=['Admin'])
@@ -114,7 +144,7 @@ def Consumption_report(request):
 def Recent_changes(request):
     if request.user.is_authenticated:
         if request.user.is_superuser:
-            return render(request, 'accounts/Managers/Recent_changes.html')
+            return render(request, 'accounts/Managers/Recent_paymnets.html')
         else:
             return redirect("basic_app:index")
 
@@ -261,16 +291,13 @@ def profile(request, id):
     user1 = User.objects.get(id=id)
     regiter_extra_model = request.user.regiter_extra_model
     form = register_extra(instance=regiter_extra_model)
-
     chat = chat_first_question_model.objects.all()
     if request.method == 'POST':
         form = register_extra(request.POST, request.FILES, instance=regiter_extra_model)
         if form.is_valid():
             form.save()
-    print(chat)
     if (chat):
         aa = chat_first_question_model.objects.filter(user=user1)
-        print(aa)
     else:
         return render(request, 'accounts/Profile/Profile.html', {'form': form, 'user1': user1})
     context = {

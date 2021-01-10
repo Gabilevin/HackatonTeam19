@@ -10,8 +10,8 @@ feel_today = (('good', "GOOD"), ('bad', "Bad"), ('excellent', "Excellent"), ('ok
 
 class chat_first_question_model(models.Model):
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
-    taking_medication = models.CharField(max_length=5000)
-    Medication_sensitivity = models.CharField(max_length=5000)
+    #taking_medication = models.CharField(max_length=5000)
+    #Medication_sensitivity = models.CharField(max_length=5000)
     Corona_feeling = models.CharField(max_length=5000)
     if_psychologist = models.CharField(max_length=5000)
     about_yourself = models.CharField(max_length=5000)

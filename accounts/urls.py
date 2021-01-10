@@ -14,13 +14,11 @@
 #     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 # """
 
-from django.contrib import admin
-from django.template.backends import django
-from django.urls import path, re_path, reverse_lazy
-from django.conf.urls import url, include
+from django.urls import path
+from django.conf.urls import url
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import render_pdf_view, render_pdf_login , UserListView
+from .views import render_pdf_view, render_pdf_login,render_pdf_payments
 
 
 app_name = "accounts"
@@ -34,23 +32,6 @@ urlpatterns = [
 
     path('login/', views.login_user, name="login"),
     path('logout/', views.logout_user, name="logout"),
-    path('password-reset/',
-         auth_views.PasswordResetView.as_view(template_name='accounts/change_password_by_email'
-                                                            '/password_reset.html'),
-         name="password_reset"),
-    path('password-reset/done/',
-         auth_views.PasswordResetDoneView.as_view(template_name='accounts/change_password_by_email'
-                                                                '/password_reset_done.html')
-         , name="password_reset_done"),
-    path('password-reset-confirm/<uidb64>P<token>/',
-         auth_views.PasswordResetConfirmView.as_view(template_name='accounts/change_password_by_email'
-                                                                   '/password_reset_confirm.html'),
-         name="password_reset_confirm"),
-
-    path('password-reset_complete/',
-         auth_views.PasswordResetCompleteView.as_view(template_name='accounts/change_password_by_email'
-                                                                    '/password_reset_complete.html'),
-         name="password_reset_complete"),
 
     path('activate/<uidb64>/<token>/', views.activate, name="activate"),
     path('Consumption_report/', views.Consumption_report, name="Consumption_report"),
@@ -59,5 +40,5 @@ urlpatterns = [
 
     path('test/',render_pdf_view,name='test-view'),
     path('test2/',render_pdf_login,name='test-view2'),
-
+    path('test3/',render_pdf_payments,name='test-view3'),
 ]

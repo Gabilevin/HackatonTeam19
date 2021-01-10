@@ -5,11 +5,11 @@ feel_today = (('good', "GOOD"), ('bad', "Bad"), ('excellent', "Excellent"), ('ok
 
 
 class chat_first_question_form(forms.ModelForm):
-    taking_medication = forms.CharField(widget=forms.Textarea)
-    Medication_sensitivity = forms.CharField(widget=forms.Textarea)
-    Corona_feeling = forms.CharField(widget=forms.Textarea)
-    if_psychologist = forms.CharField(widget=forms.Textarea)
-    about_yourself = forms.CharField(widget=forms.Textarea)
+    #taking_medication = forms.CharField(widget=forms.Textarea)
+    #Medication_sensitivity = forms.CharField(widget=forms.Textarea)
+    Corona_feeling = forms.CharField(widget=forms.Textarea(attrs={"rows":15, "cols":200}))
+    if_psychologist = forms.CharField(widget=forms.Textarea(attrs={"rows":15, "cols":200}))
+    about_yourself = forms.CharField(widget=forms.Textarea(attrs={"rows":15, "cols":200}))
     feel = forms.ChoiceField(choices=feel_today)
 
     class Meta:
