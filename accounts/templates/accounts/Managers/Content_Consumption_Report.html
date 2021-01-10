@@ -48,7 +48,7 @@
         <div class='details'>
              {% for itemReviewToAdmin in review %}
 
-                    {% if itemReviewToAdmin.release_date.day == day %}
+                    {% if itemReviewToAdmin.release_date.day == day%}
                             From: {{ itemReviewToAdmin.from_email }}<br>
                             Subject: {{ itemReviewToAdmin.subject }}<br>
                             Date: {{ itemReviewToAdmin.release_date }}<br>

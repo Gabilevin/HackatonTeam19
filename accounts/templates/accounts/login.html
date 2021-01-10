@@ -1,5 +1,19 @@
 {% extends 'basic_app/base.html' %}
 {% block body_block %}
+
+<style>
+    #hit
+    {
+         font-size: 25px;
+    }
+
+    #aa
+    {
+             font-size: 18px;
+
+    }
+</style>
+
   <div class="container">
    <div class="card">
 {% for message in errors %}
@@ -7,8 +21,8 @@
                 {% endfor %}
 
         <div class =card-body>
-          <h3 class =text-center>Login here </h3>
-            <form action="" method="POST">
+          <h1 class =text-center>Login here </h1>
+            <form  id="hit" action="" method="POST">
     {% csrf_token %}
     <label for="username">Username:</label>
     <input type="text" name="username" placeholder="Username" class ="form-control">
@@ -21,7 +35,7 @@
 </form>
 </div>
   </div>
-      <li><a class="nav-link" href="{% url 'accounts:password_reset' %}">שינוי סיסמה</a></li>
+    <a id ="aa" class="btn btn-warning" href="{% url 'password_reset' %}">Forgot Password</a>
 
   </div>
 

@@ -1,20 +1,24 @@
 
 {% extends 'basic_app/base.html' %}
+
 {% block body_block %}
 
+<div class="block" type="text">try to search some user</div>
 
- <div class="columns is-mobile">
-  <div class="column is-offset-one-fifth">
-
-    {% for user in story %}
+{% for user in users %}
       {% if user.groups.all.0.name == "customer" %}
       <h3>{{ user.username }}</h3>
                       {% endif %}
+ <div class="columns is-mobile">
+
     {%endfor%}
+  <div class="column is-offset-one-fifth">
+
 
 <div class="field has-addons">
 <form>
   <div class="control">
+
     <input class="input is-large" name="q" type="text" placeholder="Search users..." value="{{ request.GET.q }}">
   </div>
   <div class="control">

@@ -14,7 +14,7 @@ from django.urls import reverse
 from django.contrib import messages
 import random
 from django.shortcuts import render, redirect
-from accounts.decorators import allowed_users,unatenticated_user
+from accounts.decorators import allowed_users, unatenticated_user
 from django.template import RequestContext, loader
 
 
@@ -37,7 +37,6 @@ def index(request):
 
 
 def consultation(request):
-
     return render(request, 'basic_app/Menu/consultation.html')
 
 
@@ -64,13 +63,9 @@ def font_changing(request):
 def Videos(request):
     return render(request, 'basic_app/Menu/Videos.html', {})
 
-@unatenticated_user
+
 def about(request):
     return render(request, 'basic_app/settings/about.html', {})
-
-
-# def Profile(request):
-#     return render(request, 'basic_app/settings/Profile.html', {})
 
 
 def Review(request):
@@ -91,9 +86,6 @@ def Review(request):
     return render(request, "basic_app/settings/Review.html", {'form': form})
 
 
-
-
-
 def detail(request, id):
     storie = stories_model.objects.get(id=id)
 
@@ -102,7 +94,8 @@ def detail(request, id):
     }
     return render(request, 'basic_app/Menu/stories/detail.html', context)
 
-@allowed_users(allowed_roles=['Admin', 'Doc','student_Doc'])
+
+@allowed_users(allowed_roles=['Admin', 'Doc', 'student_Doc'])
 def edit_story(request, id):
     if request.user.is_authenticated:
         if request.user.is_superuser:
@@ -123,7 +116,8 @@ def edit_story(request, id):
 
     return redirect("accounts:login")
 
-@allowed_users(allowed_roles=['Admin', 'Doc','student_Doc'])
+
+@allowed_users(allowed_roles=['Admin', 'Doc', 'student_Doc'])
 def delete_story(request, id):
     if request.user.is_authenticated:
         if request.user.is_superuser:

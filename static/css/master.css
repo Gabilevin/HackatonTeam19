@@ -6,7 +6,10 @@ header {
   background: red;
   margin: 0;
 }
-
+li {
+    background:red;
+    margin: 1em;
+}
 
 body{
   background: red;
