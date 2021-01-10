@@ -2,6 +2,13 @@
 {% extends 'basic_app/base.html' %}
 {% block body_block %}
 
+<style>
+    #hit
+    {
+         font-size: 15px;
+    }
+
+</style>
 
  <div class="columns is-mobile">
   <div class="column is-offset-one-fifth">
@@ -15,13 +22,14 @@
 <div class="field has-addons">
 <form>
   <div class="control">
-    <input class="input is-large" name="q" type="text" placeholder="Search users..." value="{{ request.GET.q }}">
+    <input id="hit" class="input is-large" name="q" type="text" placeholder="Search users..." value="{{ request.GET.q }}">
   </div>
   <div class="control">
-  	<button type="submit" class="button is-success">Search</button>
+  	<button id="hit" type="submit" class="btn btn-info">Search</button>
   </div>
   </form>
 </div>
+      <br>
 
 
 </div>
@@ -45,10 +53,11 @@
     <div class="media-content">
       <div class="content">
         <p>
-          <strong>{{ user.first_name }} {{ user.last_name }}</strong><small>@{{ user.username }}</small>
+           <strong id="hit">First name: {{ user.first_name }}  <br> Last name: {{ user.last_name }}</strong><br>
+            <small id="hit">@{{ user.username }}</small>
         </p>
 
-        <a href="{% url 'chat:newconversation_cost' user.username %}" class="button is-info">Send a message!</a>
+        <a href="{% url 'chat:newconversation_cost' user.username %}" class="btn btn-success btn-lg">Send a message!</a>
           {% endif %}
 
       </div>

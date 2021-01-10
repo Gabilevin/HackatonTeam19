@@ -21,7 +21,7 @@ from .utils import token_generator
 from django.contrib.auth import login as auth_login
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-from chat.models import chat_first_question_model,payment
+from chat.models import chat_first_question_model, payment
 from basic_app.models import itemReviewToAdmin
 from django.template.loader import get_template
 from xhtml2pdf import pisa
@@ -46,7 +46,7 @@ def render_pdf_payments(request):
     payments_users = payment.objects.all()
     print(payments_count)
 
-    user_dict = {'user': user_list,'payments_count':payments_count,'payments_users':payments_users}
+    user_dict = {'user': user_list, 'payments_count': payments_count, 'payments_users': payments_users}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
     # Download
@@ -64,7 +64,6 @@ def render_pdf_payments(request):
     if pisa_status.err:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
-
 
 
 def render_pdf_view(request):
@@ -92,30 +91,28 @@ def render_pdf_view(request):
     return response
 
 
-
 def render_pdf_login(request):
     day = datetime.now().day
     template_path = 'accounts/Managers/Content_Consumption_Report.html'
     reviews_list = itemReviewToAdmin.objects.order_by('id')
-    reviews_dict = {'review': reviews_list,'day' : day}
-        # Create a Django response object, and specify content_type as pdf
+    reviews_dict = {'review': reviews_list, 'day': day}
+    # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
-            #Download
-    #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
-            #Dispaly
+    # Download
+    # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    # Dispaly
     response['Content-Disposition'] = 'filename="report.pdf"'
-        # find the template and render it.
+    # find the template and render it.
     template = get_template(template_path)
     html = template.render(reviews_dict)
 
-        # create a pdf
+    # create a pdf
     pisa_status = pisa.CreatePDF(
-       html, dest=response)
-        # if error then show some funy view
+        html, dest=response)
+    # if error then show some funy view
     if pisa_status.err:
-       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
-
 
 
 @allowed_users(allowed_roles=['Admin'])
@@ -196,12 +193,15 @@ def register(request):
                 raw_password = form.cleaned_data.get('password1')
                 #
                 user = authenticate(username=user.username, password=raw_password)
-                return redirect("basic_app:index")
-
+                return render(request, 'accounts/Send_activate.html', {})
         else:
             form = RegistrationForm()
             form1 = register_extra()
         return render(request, "accounts/register.html", {"form": form, "form1": form1})
+
+
+def Send_activate(request):
+    return render(request, 'accounts/Send_activate.html', {})
 
 
 class VerificationView(View):

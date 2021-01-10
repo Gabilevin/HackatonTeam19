@@ -8,6 +8,7 @@
 <ul class="messages">
     {% for message in messages %}
     {% endfor %}
+
 </ul>
 {% endif %}
 <link rel="stylesheet" href="{% static '/css/bulma.min.css' %}">
@@ -23,6 +24,8 @@
     <h1 class="title is-2">
     Messages
     </h1>
+      <a href="{% url 'chat:usersearch' %}" class="button is-success">New message</a>
+
   <ul style="overflow-y: scroll; height: 500px" class="menu-list">
 
 {% for message in messages %}
@@ -64,7 +67,6 @@
   </ul>
   </aside>
 <br>
-<a href="{% url 'chat:usersearch' %}" class="button is-success">New message</a>
 
 </div>
 

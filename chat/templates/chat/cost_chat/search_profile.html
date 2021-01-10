@@ -22,7 +22,7 @@
     <input class="input is-large" name="q" type="text" placeholder="Search users..." value="{{ request.GET.q }}">
   </div>
   <div class="control">
-  	<button type="submit" class="button is-success">Search</button>
+  	<button type="submit" class=" btn btn-lg btn-info">Search</button><br><br>
   </div>
   </form>
 </div>
@@ -49,9 +49,9 @@
     <div class="media-content">
       <div class="content">
         <p>
-          <strong>{{ user.first_name }} {{ user.last_name }}</strong><small>
-                 <li><a  class="nav-link" href="{% url 'accounts:profile' user.pk %}">פרופיל אישי</a></li>
-@{{ user.username }}</small>
+          <strong>{{ user.first_name }} <br>{{ user.last_name }}<br<@{{ user.username }}<br><br>
+               <a  class="btn btn-lg btn-primary" href="{% url 'accounts:profile' user.pk %}">Profile</a></strong>
+
         </p>
 
           {% endif %}
