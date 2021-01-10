@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^Profile/Video_repository/$', views.Video_repository, name='Video_repository'),
     path('basic_app/settings/Profile/<int:id>/', views.profile, name='profile'),
     url(r'^Profile/change_password/$', views.change_password, name='change_password'),
+    url(r'Send_activate^/$', views.Send_activate, name='Send_activate'),
 
     path('login/', views.login_user, name="login"),
     path('logout/', views.logout_user, name="logout"),

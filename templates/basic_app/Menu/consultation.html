@@ -1,12 +1,33 @@
 
 {% extends 'basic_app/base.html' %}
 {% block body_block %}
+<style>
+  #hit
+    {
+         font-size: 25px;
+         text-align: center
+    }
+      #hit1
+    {
+         font-size: 15px;
+    }
 
-<h1> יעוץ</h1>
-  <li><a class='navbar-link' href="{% url 'chat:cost_chat' %}">צט עם פסיכולוג</a></li>
-  <li><a class="navbar-link" href="{% url 'chat:Inbox' %}">צט עם מתמחה</a></li>
-  <li><a class="navbar-link" href="{% url 'chat:QA' %}">שאלות ותשובות</a></li>
-  <li><a class="navbar-link" href="{% url 'chat:Daliy_Tip' %}">טיפים</a></li>
+</style>
+<h1 id="hit"> Consultation</h1>
+              {% if not user.groups.all.0.name == "Doc" and  not user.groups.all.0.name == "student_Doc" %}
+  <li id="hit1"><a id="hit1" class='btn btn-info' href="{% url 'chat:cost_chat' %}">Chat with a psychologist</a></li><br>
+  <li id="hit1"><a id="hit1" class="btn btn-info" href="{% url 'chat:Inbox' %}"> Chat with a specialized psychologist</a></li><br>
+
+            {%endif%}
+     {% if  user.groups.all.0.name == "Doc" %}
+  <li id="hit1"><a id="hit1" class='btn btn-info' href="{% url 'chat:cost_chat' %}">Chat with a Patient</a></li><br>
+            {%endif%}
+{% if  user.groups.all.0.name == "student_Doc" %}
+  <li id="hit1"><a id="hit1" class='btn btn-info' href="{% url 'chat:Inbox' %}">Chat with a Patient</a></li><br>
+            {%endif%}
+
+  <li id="hit1"><a id="hit1" class="btn btn-info" href="{% url 'chat:QA' %}">Questions and Answers</a></li><br>
+  <li id="hit1"><a  id="hit1" class="btn btn-info" href="{% url 'chat:Daliy_Tip' %}">Tips</a></li><br>
 
 
 

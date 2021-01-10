@@ -3,15 +3,23 @@
 {% load crispy_forms_tags %}
 
 {% block body_block %}
+
+<style>
+    #hit
+    {
+         font-size: 15px;
+    }
+
+</style>
 <div class ="container">
     <br>
     <div class ="card">
         <div class ="card-body">
-            <h3 class="text-center "> Add QA</h3>
-            <form action="" method="POST">
+            <h1 class="text-center "> Add QA</h1>
+            <form id="hit" action="" method="POST">
                   {{ form | crispy }}
                   {% csrf_token %}
-                <button type="submit">Add QA</button>
+                <button id="hit" class="btn btn-success btn-lg" type="submit">Add QA</button>
 
             </form>
 

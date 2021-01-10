@@ -2,7 +2,14 @@
 {% extends 'basic_app/base.html' %}
 {% block body_block %}
 
-<h1>  שאלות ותשובות  </h1>
+<style>
+    #hit
+    {
+         font-size: 15px;
+    }
+
+</style>
+<h1>  Questions and Answers  </h1>
 
    {% for message in messages %}
                 <h3><i id="message" style="background-color:red">{{message}}</i></h3>
@@ -12,7 +19,7 @@
       <div class="row">
   <div class="col-sm-6 col-md-4">
     <div class="thumbnail">
-      <a href = '/chat/QA/QA_detail/{{ QAS.id }}'><div class="caption">
+      <a id-="hit" href = '/chat/QA/QA_detail/{{ QAS.id }}'><div class="caption">
           <h3> {{ QAS.subject }} </h3>
           <h4>{{ QAS.release_date }}</h4>
 
@@ -24,7 +31,7 @@
 
               {% if not user.groups.all.0.name == "customer" %}
 
-        <a href="{% url 'chat:QA_add'%}" class="btn btn-primary">add QA</a>
+        <a href="{% url 'chat:QA_add'%}" class="btn btn-lg btn-success">add QA</a>
     {% endif %}
 
 
